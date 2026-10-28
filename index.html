@@ -843,6 +843,85 @@
     .card-thumb-placeholder i { font-size: 44px; }
     .is-hidden { display: none !important; }
 
+    .lyr-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .lyr-tools .btn { padding: 8px 12px; font-size: 12.5px; }
+    .lyr-status { font-size: 12px; color: var(--muted); margin-top: 8px; min-height: 16px; }
+    .admin-box textarea.lyr-box { min-height: 130px; }
+    .player-btn.on { color: #fff; background: rgba(255,255,255,0.12); }
+
+    .lyrics-panel {
+      position: fixed; top: 0; left: var(--sidebar); right: 0; bottom: 72px; z-index: 25;
+      background: rgba(7,7,10,0.92); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      display: flex; flex-direction: column; align-items: center;
+      opacity: 0; pointer-events: none; transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lyrics-panel.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .lyrics-head { width: 100%; max-width: 760px; padding: 22px 28px 8px; display: flex; align-items: center; gap: 12px; }
+    .lyrics-head .lh-title { flex: 1; min-width: 0; }
+    .lyrics-head .lh-title b { display: block; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lyrics-head .lh-title span { font-size: 12.5px; color: var(--dim); }
+    .lyrics-body { flex: 1; width: 100%; max-width: 760px; overflow-y: auto; padding: 30vh 28px; scroll-behavior: smooth; scrollbar-width: none; }
+    .lyrics-body::-webkit-scrollbar { display: none; }
+    .lyr-line { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; padding: 9px 0; color: rgba(255,255,255,0.28); transition: color 0.25s ease, transform 0.25s ease; transform-origin: left center; cursor: pointer; }
+    .lyr-line.synced:hover { color: rgba(255,255,255,0.6); }
+    .lyr-line.active { color: #fff; transform: scale(1.04); }
+    .lyr-line.plain { font-size: 20px; font-weight: 550; color: rgba(255,255,255,0.8); cursor: default; padding: 5px 0; }
+    .lyr-line.blank { padding: 10px 0; }
+    .lyrics-empty { color: var(--dim); text-align: center; margin-top: -20vh; font-size: 15px; }
+
+    .sync-overlay { position: fixed; inset: 0; z-index: 400; background: rgba(0,0,0,0.88); backdrop-filter: blur(14px); display: none; align-items: center; justify-content: center; padding: 20px; }
+    .sync-overlay.show { display: flex; }
+    .sync-box { background: rgba(16,16,20,0.97); border: 1px solid var(--border); border-radius: 24px; width: 100%; max-width: 560px; max-height: 92vh; display: flex; flex-direction: column; padding: 24px; gap: 14px; }
+    .sync-box h2 { font-size: 18px; font-weight: 700; }
+    .sync-help { font-size: 12.5px; color: var(--muted); }
+    .sync-time { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted); text-align: center; }
+    .sync-lines { flex: 1; min-height: 160px; overflow-y: auto; border: 1px solid var(--border); border-radius: 14px; padding: 8px; background: rgba(255,255,255,0.03); }
+    .sync-line { display: flex; gap: 10px; padding: 7px 10px; border-radius: 9px; font-size: 14px; color: var(--dim); }
+    .sync-line .st { width: 62px; flex: none; font-variant-numeric: tabular-nums; font-size: 12px; padding-top: 2px; }
+    .sync-line.done { color: var(--muted); }
+    .sync-line.done .st { color: var(--success); }
+    .sync-line.next { background: rgba(255,255,255,0.1); color: #fff; }
+    .sync-tap { width: 100%; padding: 18px; font-size: 15px; }
+    @media (max-width: 800px) { .lyrics-panel { left: 72px; } .lyr-line { font-size: 22px; } }
+
+    /* ---- Music library (Spotify-style) ---- */
+    .cover-row { display: flex; gap: 12px; align-items: flex-start; }
+    .cover-prev { width: 96px; height: 96px; border-radius: 10px; object-fit: cover; flex: none; border: 1px solid var(--border); }
+    .cover-row .lyr-tools { margin-top: 8px; }
+    .music-toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 22px; flex-wrap: wrap; }
+    .search-box { flex: 1; min-width: 200px; position: relative; }
+    .search-box i { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); color: var(--dim); pointer-events: none; }
+    .search-box input { width: 100%; padding: 13px 16px 13px 44px; background: var(--glass); border: 1px solid var(--border); border-radius: 999px; color: #fff; font-size: 14px; outline: none; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color 0.15s; }
+    .search-box input:focus { border-color: var(--border-glow); }
+    .seg { display: flex; gap: 4px; padding: 4px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 999px; }
+    .seg button { padding: 8px 18px; border: none; border-radius: 999px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .seg button.active { background: #fff; color: #000; }
+    .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 12px; }
+    .album-card { padding: 12px; border-radius: var(--radius); cursor: pointer; transition: background 0.2s ease; }
+    .album-card:hover { background: var(--glass-strong); }
+    .cv-wrap { position: relative; }
+    .cv { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; display: block; background: #121218; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .cv.ph { display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 34px; background: linear-gradient(145deg, #1a1a22, #0c0c10); }
+    .cv-sm { width: 44px; height: 44px; aspect-ratio: auto; border-radius: 8px; flex: none; box-shadow: none; font-size: 18px; }
+    .cv-lg { width: 200px; height: 200px; aspect-ratio: auto; flex: none; border-radius: 14px; font-size: 56px; }
+    .ac-play { position: absolute; right: 10px; bottom: 10px; width: 44px; height: 44px; border-radius: 50%; border: none; background: #fff; color: #000; font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: translateY(8px); transition: all 0.2s ease; box-shadow: 0 6px 18px rgba(0,0,0,0.5); }
+    .ac-play:hover { transform: scale(1.08); }
+    .album-card:hover .ac-play { opacity: 1; transform: translateY(0); }
+    @media (hover: none) { .ac-play { opacity: 1; transform: none; } }
+    .ac-title { margin-top: 12px; font-weight: 650; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ac-sub { font-size: 12.5px; color: var(--dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sec-label { grid-column: 1 / -1; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; margin: 14px 0 4px; }
+    .ad-head { display: flex; gap: 24px; align-items: flex-end; margin-bottom: 26px; flex-wrap: wrap; }
+    .ad-type { font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--dim); font-weight: 650; }
+    .ad-title { font-size: 34px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.1; margin: 6px 0; }
+    .ad-sub { font-size: 13.5px; color: var(--muted); }
+    .ad-actions { display: flex; gap: 10px; margin-top: 16px; }
+    #musicList .track { animation: none; opacity: 1; cursor: pointer; }
+    .track.playing .track-title { color: var(--success); }
+    .player-cover { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex: none; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+    @media (max-width: 800px) { .cv-lg { width: 140px; height: 140px; } .ad-title { font-size: 26px; } }
+
     .editor-wrap { position: relative; height: 280px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #1e1e1e; }
     .editor { height: 100%; width: 100%; }
     .editor-wrap.fs { position: fixed; inset: 0; height: auto; z-index: 300; border-radius: 0; border: none; }
@@ -855,6 +934,61 @@
     .stat-row b { margin-left: auto; color: #fff; font-weight: 650; }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); flex: none; }
     @media (max-width: 800px) { .stat-label { display: none; } .stat-row { flex-direction: column; gap: 2px; font-size: 11px; } .stat-row b { margin-left: 0; } .live-dot { display: none; } }
+    .game-overlay { z-index: 200; }
+    .ed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 12px; }
+    .ed-tile { position: relative; padding: 8px; border: 1px solid var(--border); border-radius: 14px; background: var(--glass); }
+    .ed-tile.sel, .ed-row.sel { border-color: #fff; }
+    .ed-tile .ac-title { margin-top: 8px; font-size: 13px; }
+    .ed-tile .btn { width: 100%; margin-top: 8px; padding: 7px; font-size: 12px; }
+    .ed-chk { position: absolute; top: 14px; left: 14px; z-index: 2; background: rgba(0,0,0,0.65); border-radius: 6px; padding: 3px 4px; display: flex; }
+    .ed-chk input, .ed-row input, .ed-all input { width: 16px; height: 16px; accent-color: #fff; cursor: pointer; }
+    .ed-rows { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .ed-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 12px; background: var(--glass); }
+    .ed-row .btn { padding: 6px 10px; font-size: 12px; }
+    .ed-bulk { position: sticky; top: 0; z-index: 5; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 10px 12px; margin-top: 12px; border: 1px solid var(--border-glow); border-radius: 12px; background: rgba(24,24,30,0.97); }
+    .ed-bulk span { flex: 1; font-size: 13px; }
+    .ed-bulk .btn { padding: 7px 12px; font-size: 12px; }
+    .ed-btns { display: flex; gap: 6px; }
+    .ed-btns .btn { flex: 1; width: auto; }
+    .ed-ttl { font-weight: 700; font-size: 17px; margin: 14px 0 4px; }
+    .ed-ttl small { color: var(--dim); font-weight: 500; font-size: 13px; margin-left: 6px; }
+    .ed-all { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 8px; cursor: pointer; }
+
+    .vol { display: flex; align-items: center; gap: 4px; margin-left: 8px; }
+    .vol input { width: 96px; accent-color: #fff; cursor: pointer; }
+    .lyrics-panel { left: auto; right: 0; width: 380px; border-left: 1px solid var(--border); background: rgba(10,10,14,0.9); }
+    body:not(.on-music) .lyrics-panel:not(:fullscreen) { display: none; }
+    body.on-music.lyr-open .site-main { padding-right: 420px; }
+    .lyrics-panel .lyr-line { font-size: 22px; }
+    .lyrics-panel .lyrics-body, .lyrics-panel .lyrics-head { max-width: none; padding-left: 22px; padding-right: 22px; }
+    .lyrics-panel:fullscreen { width: 100% !important; bottom: 0 !important; background: #07070a; }
+    .lyrics-panel:fullscreen .lyr-line { font-size: 42px; }
+    .lyrics-panel:fullscreen .lyrics-body, .lyrics-panel:fullscreen .lyrics-head { max-width: 1000px; }
+    @media (max-width: 800px) { .lyrics-panel { left: 72px; width: auto; } body.on-music.lyr-open .site-main { padding-right: 18px; } .vol input { width: 60px; } }
+    #plView .track { animation: none; opacity: 1; cursor: pointer; }
+    .add-pl { font-size: 14px; }
+    .ac-add { right: 62px; background: rgba(0,0,0,0.7); color: #fff; }
+    .pl-pick { display: flex; flex-direction: column; gap: 8px; }
+    .pl-pick .btn { text-align: left; display: flex; justify-content: space-between; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px 6px 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--glass); font-size: 13px; }
+    .chip button { border: none; background: transparent; color: var(--muted); cursor: pointer; font-size: 16px; display: flex; }
+    .chip button:hover { color: #fff; }
+    .admin-box { max-width: 560px; }
+    .admin-box .search-box input { padding-left: 44px; border-radius: 999px; }
+    .song-card { border: 1px solid var(--border); border-radius: 16px; padding: 14px; margin-bottom: 14px; background: rgba(255,255,255,0.03); }
+    .sc-head { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .sc-head b { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 14px; }
+    .sc-head b i { font-style: normal; font-weight: 500; color: var(--muted); }
+    .sc-head .btn { padding: 6px 10px; font-size: 12px; }
+    .sc-body { margin-top: 12px; }
+    .song-card.collapsed .sc-body { display: none; }
+    .sc-row { display: flex; gap: 10px; }
+    .sc-row .form-group { flex: 1; }
+    .sc-row .sc-no { flex: 0 0 90px; }
+    .pa-list { max-height: 50vh; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .pa-row { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--glass); }
+    .pa-btn.on { background: #fff; color: #000; }
   </style>
 </head>
 <body>
@@ -935,7 +1069,14 @@
             </div>
           </div>
         </div>
+        <div class="music-toolbar" id="musicTools">
+          <div class="search-box"><i class="bi bi-search"></i><input type="search" id="musicSearch" placeholder="Search songs, artists, albums"></div>
+          <div class="seg"><button type="button" data-mv="albums" class="active">Albums</button><button type="button" data-mv="songs">Songs</button><button type="button" data-mv="playlists">Playlists</button></div>
+        </div>
+        <div id="albumDetail" class="is-hidden"></div>
+        <div class="album-grid" id="albumGrid"></div>
         <div class="music-list" id="musicList"></div>
+        <div id="plView" class="is-hidden"></div>
       </section>
 
       <section class="page" id="movies">
@@ -960,14 +1101,40 @@
   </div>
 
   <div class="player" id="player">
+    <img class="player-cover is-hidden" id="playerCover" alt="">
     <div class="player-info">
       <div class="player-title" id="playerTitle">—</div>
       <div class="player-artist" id="playerArtist">—</div>
     </div>
     <div class="player-controls">
+      
       <button class="player-btn" id="prevBtn"><i class="bi bi-skip-start-fill"></i></button>
       <button class="player-btn main" id="playPauseBtn"><i class="bi bi-play-fill"></i></button>
-      <button class="player-btn" id="nextBtn"><i class="bi bi-skip-end-fill"></i></button>
+      <button class="player-btn" id="nextBtn"><i class="bi bi-skip-end-fill"></i></button><span class="vol"><button class="player-btn" id="volBtn" title="Mute"><i class="bi bi-volume-up-fill"></i></button><input type="range" id="vol" min="0" max="1" step="0.01" value="1" title="Volume"></span>
+    </div>
+  </div>
+
+  <div class="lyrics-panel" id="lyricsPanel">
+    <div class="lyrics-head">
+      <div class="lh-title"><b id="lyrTitle">—</b><span id="lyrArtist"></span></div>
+      <button class="player-btn" id="lyrFs" title="Fullscreen"><i class="bi bi-arrows-fullscreen"></i></button>
+    </div>
+    <div class="lyrics-body" id="lyricsBody"></div>
+  </div>
+
+  <div class="sync-overlay" id="syncOverlay">
+    <div class="sync-box">
+      <h2>Tap to sync lyrics</h2>
+      <div class="sync-help">Press Play, then press <b>Stamp line</b> (or the Space bar) right as each highlighted line starts being sung. Use Undo to go back one line.</div>
+      <audio id="syncAudio" controls style="width:100%"></audio>
+      <div class="sync-time" id="syncTime">0:00.00</div>
+      <div class="sync-lines" id="syncLines"></div>
+      <button class="btn btn-primary sync-tap" id="syncTap">Stamp line</button>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-ghost" id="syncUndo">Undo</button>
+        <button class="btn btn-primary" id="syncDone">Done</button>
+        <button class="btn btn-ghost" id="syncCancel">Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -1001,17 +1168,22 @@
           <div class="form-group"><label>Thumbnail (optional)</label><input type="file" id="gameThumb" accept="image/*"></div>
           <div class="form-group"><label>Game HTML code</label><div class="editor-wrap" id="gameEdWrap"><button type="button" class="fmt-btn" data-ed="game" title="Format code"><i class="bi bi-braces"></i></button><button type="button" class="fs-btn" data-wrap="gameEdWrap" title="Fullscreen"><i class="bi bi-arrows-fullscreen"></i></button><div class="editor" id="gameEd"></div></div></div>
           <div class="btn-row">
+            <button class="btn btn-ghost" id="testGame"><i class="bi bi-play-fill"></i> Test</button>
             <button class="btn btn-primary" id="saveGame">Save Game</button>
             <button class="btn btn-ghost" id="logoutBtn">Logout</button>
           </div>
         </div>
 
         <div id="addMusic" style="display:none">
-          <div class="form-group"><label>Title</label><input type="text" id="musicTitle" placeholder="Track name"></div>
-          <div class="form-group"><label>Artist</label><input type="text" id="musicArtist" placeholder="Artist"></div>
-          <div class="form-group"><label>Audio file (max 20MB)</label><input type="file" id="musicFile" accept="audio/*"></div>
+          <div class="lyr-tools" style="margin:0 0 14px">
+            <button type="button" class="btn btn-primary" id="addSongBtn"><i class="bi bi-plus-lg"></i> Song</button>
+            <button type="button" class="btn btn-ghost" id="allCovers"><i class="bi bi-search"></i> Get covers (all)</button>
+            <button type="button" class="btn btn-ghost" id="allLyrics"><i class="bi bi-search"></i> Get lyrics (all)</button>
+          </div>
+          <div id="songCards"></div>
+          <div class="lyr-status" id="bulkStatus"></div>
           <div class="btn-row">
-            <button class="btn btn-primary" id="saveMusic">Save Track</button>
+            <button class="btn btn-primary" id="saveMusic">Save All</button>
             <button class="btn btn-ghost" id="logoutBtn2">Logout</button>
           </div>
         </div>
@@ -1020,16 +1192,74 @@
           <div class="form-group"><label>What do you want to edit?</label>
             <select id="edKind"><option value="games">Games</option><option value="music">Music</option></select>
           </div>
-          <div class="form-group"><label>Item</label><select id="edItem"></select></div>
+          <div class="form-group is-hidden"><label>Item</label><select id="edItem"></select></div>
+          <div id="edBrowse">
+            <div class="music-toolbar" style="margin:0">
+              <div class="search-box"><i class="bi bi-search"></i><input type="search" id="edQ" placeholder="Search"></div>
+              <div class="seg" id="edViewSeg"><button type="button" data-ev="albums" class="active">Albums</button><button type="button" data-ev="songs">Songs</button></div>
+            </div>
+            <div id="edBulk"></div>
+            <div id="edBrowseBody"></div>
+          </div>
+          <div id="albEdit" class="is-hidden">
+            <button type="button" class="btn btn-ghost" id="albBack" style="margin-bottom:14px"><i class="bi bi-arrow-left"></i> Back to list</button>
+            <div class="lyr-status" style="margin:0 0 14px">Changes apply to every song in this album.</div>
+            <div class="form-group"><label>Album name (leave blank to make them singles)</label><input type="text" id="albName"></div>
+            <div class="form-group"><label>Artist</label><input type="text" id="albArtist"></div>
+            <input type="hidden" id="albTitleHid">
+            <div class="form-group"><label>Cover art</label>
+              <div class="cover-row">
+                <img class="cover-prev is-hidden" id="albCoverPrev" alt="">
+                <div style="flex:1;min-width:0">
+                  <input type="hidden" id="albCover">
+                  <div class="lyr-status" id="albCoverStatus" style="margin-top:0"></div>
+                  <div class="lyr-tools">
+                    <button type="button" class="btn btn-ghost" id="albCoverFind"><i class="bi bi-search"></i> Look up cover</button>
+                    <button type="button" class="btn btn-ghost" id="albCoverClear">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <input type="file" id="albCoverFile" accept="image/*" style="margin-top:8px">
+            </div>
+            <div class="btn-row"><button class="btn btn-primary" id="albSave">Save Album</button><button class="btn btn-ghost" id="albCancel">Cancel</button></div>
+          </div>
           <div id="edFields" class="is-hidden">
+            <button type="button" class="btn btn-ghost" id="edBack" style="margin-bottom:14px"><i class="bi bi-arrow-left"></i> Back to list</button>
             <div class="form-group"><label>Title</label><input type="text" id="edTitle"></div>
             <div class="form-group" id="edArtistWrap"><label>Artist</label><input type="text" id="edArtist"></div>
+            <div id="edMusicFields" class="is-hidden">
+              <div class="form-group"><label>Album</label><input type="text" id="edAlbum" placeholder="Album name"></div>
+              <div class="form-group"><label>Track #</label><input type="text" id="edTrackNo" placeholder="1"></div>
+              <div class="form-group"><label>Cover art</label>
+                <div class="cover-row">
+                  <img class="cover-prev is-hidden" id="edCoverPrev" alt="">
+                  <div style="flex:1;min-width:0">
+                    <input type="hidden" id="edCover">
+                    <div class="lyr-status" id="edCoverStatus" style="margin-top:0"></div>
+                    <div class="lyr-tools">
+                      <button type="button" class="btn btn-ghost" id="edCoverFind"><i class="bi bi-search"></i> Look up cover</button>
+                      <button type="button" class="btn btn-ghost" id="edCoverClear">Remove</button>
+                    </div>
+                  </div>
+                </div>
+                <input type="file" id="edCoverFile" accept="image/*" style="margin-top:8px">
+              </div>
+              <div class="form-group"><label>Lyrics (.lrc synced or plain text)</label>
+                <textarea id="edLyrics" class="lyr-box" placeholder="[00:12.50] First line"></textarea>
+                <div class="lyr-tools">
+                  <button type="button" class="btn btn-ghost" id="edLrcFind"><i class="bi bi-search"></i> Find on LRCLIB</button>
+                  <button type="button" class="btn btn-ghost" id="edLrcSync"><i class="bi bi-hand-index-thumb"></i> Tap to sync</button>
+                </div>
+                <div class="lyr-status" id="edLrcStatus"></div>
+              </div>
+            </div>
             <div id="edGameFields">
               <div class="form-group"><label>Icon</label><div id="edIconPick"></div></div>
               <div class="form-group"><label>Replace thumbnail (optional)</label><input type="file" id="edThumb" accept="image/*"></div>
               <div class="form-group"><label>Game HTML code</label><div class="editor-wrap" id="edEdWrap"><button type="button" class="fmt-btn" data-ed="edit" title="Format code"><i class="bi bi-braces"></i></button><button type="button" class="fs-btn" data-wrap="edEdWrap" title="Fullscreen"><i class="bi bi-arrows-fullscreen"></i></button><div class="editor" id="edEd"></div></div></div>
             </div>
             <div class="btn-row">
+              <button class="btn btn-ghost" id="edTest"><i class="bi bi-play-fill"></i> Test</button>
               <button class="btn btn-primary" id="edSave">Save Changes</button>
               <button class="btn btn-ghost" id="edDelete" style="color:var(--danger)">Delete</button>
               <button class="btn btn-ghost" id="logoutBtn3">Logout</button>
@@ -1039,6 +1269,21 @@
       </div>
     </div>
   </div>
+
+  <div class="admin-modal" id="plAddModal"><div class="admin-box">
+    <h2 id="plAddTitle">Add to playlist</h2>
+    <div class="search-box" style="margin-bottom:12px"><i class="bi bi-search"></i><input type="search" id="plAddQ" placeholder="Search albums and songs"></div>
+    <div class="seg" style="margin-bottom:14px;width:max-content"><button type="button" data-pam="albums" class="active">Albums</button><button type="button" data-pam="songs">Songs</button></div>
+    <div id="plAddList" class="pa-list"></div>
+    <div class="btn-row"><button class="btn btn-primary" id="plAddDone">Done</button></div>
+  </div></div>
+
+  <div class="admin-modal" id="plModal"><div class="admin-box">
+    <h2>Add to playlist</h2>
+    <div id="plPick" class="pl-pick"></div>
+    <div class="form-group" style="margin-top:14px"><input type="text" id="plNew" placeholder="New playlist name"></div>
+    <div class="btn-row"><button class="btn btn-primary" id="plCreate">Create &amp; add</button><button class="btn btn-ghost" id="plClose">Close</button></div>
+  </div></div>
 
   <div class="game-overlay" id="gameOverlay">
     <div class="game-bar">
@@ -1110,6 +1355,7 @@
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
         btn.classList.add("active");
         $(btn.dataset.page).classList.add("active");
+        document.body.classList.toggle("on-music", btn.dataset.page === "music");
       });
     });
 
@@ -1136,33 +1382,137 @@
       }));
     }
 
+    /* ---------- Music library: albums, search, queue ---------- */
+    let mView = "albums", mAlbum = null, mQuery = "", queue = [], currentId = null;
+
+    const coverEl = (url, cls) => url
+      ? `<img class="${cls}" src="${esc(url)}" alt="" loading="lazy">`
+      : `<div class="${cls} ph"><i class="bi bi-music-note-beamed"></i></div>`;
+
+    function albumsOf(list) {
+      const map = new Map();
+      list.forEach(t => {
+        const name = (t.album || "").trim();
+        const key = (name || t.title) + "||" + (t.artist || "");
+        if (!map.has(key)) map.set(key, { key, name: name || t.title, artist: t.artist || "Unknown", cover: t.cover || null, single: !name, tracks: [] });
+        const a = map.get(key);
+        a.tracks.push(t);
+        if (!a.cover && t.cover) a.cover = t.cover;
+      });
+      map.forEach(a => a.tracks.sort((x, y) => (x.track_no ?? 999) - (y.track_no ?? 999)));
+      return [...map.values()];
+    }
+
+    function trackRow(t, i, mode) {
+      const lead = mode === "num" ? `<div class="track-num">${(t.track_no || i + 1)}</div>` : coverEl(t.cover, "cv cv-sm");
+      const sub = esc(t.artist || "Unknown") + (mode === "cover" && t.album ? " · " + esc(t.album) : "");
+      return `<div class="track${t.id === currentId ? " playing" : ""}" data-id="${t.id}" data-i="${i}">${lead}<div class="track-info"><div class="track-title">${esc(t.title)}</div><div class="track-artist">${sub}</div></div><button class="play-btn add-pl" data-id="${t.id}" title="Add to playlist"><i class="bi bi-plus-lg"></i></button><button class="play-btn" data-i="${i}"><i class="bi bi-play-fill"></i></button></div>`;
+    }
+
+    function markPlaying() {
+      document.querySelectorAll("#musicList .track, #plView .track").forEach(el => el.classList.toggle("playing", el.dataset.id === String(currentId)));
+    }
+
+    function playList(list, i) { queue = list; playTrack(i); }
+
     function renderMusic() {
-      const list = $("musicList");
       updateCounts();
+      const grid = $("albumGrid"), list = $("musicList"), detail = $("albumDetail"), tools = $("musicTools");
       if (!music.length) {
+        tools.classList.add("is-hidden"); grid.classList.add("is-hidden"); detail.classList.add("is-hidden");
+        list.classList.remove("is-hidden");
         list.innerHTML = `<div class="empty-panel"><i class="bi bi-music-note-beamed"></i><p>No tracks yet</p><span>Upload music from the Admin panel</span></div>`;
         return;
       }
-      list.innerHTML = music.map((t, i) => `
-        <div class="track">
-          <div class="track-num">${String(i + 1).padStart(2, "0")}</div>
-          <div class="track-info"><div class="track-title">${esc(t.title)}</div><div class="track-artist">${esc(t.artist || "Unknown")}</div></div>
-          <button class="play-btn" data-index="${i}"><i class="bi bi-play-fill"></i></button>
-        </div>`).join("");
-      list.querySelectorAll(".play-btn").forEach(btn => btn.addEventListener("click", () => playTrack(+btn.dataset.index)));
+      tools.classList.remove("is-hidden");
+      const q = mQuery.trim().toLowerCase();
+      document.querySelectorAll("[data-mv]").forEach(b => b.classList.toggle("active", !q && b.dataset.mv === mView));
+      const all = albumsOf(music);
+
+      const pv = $("plView");
+      if (mView === "playlists" && !q && !mAlbum) {
+        grid.classList.add("is-hidden"); list.classList.add("is-hidden"); detail.classList.add("is-hidden");
+        pv.classList.remove("is-hidden"); renderPL(); return;
+      }
+      pv.classList.add("is-hidden");
+      const album = mAlbum ? all.find(a => a.key === mAlbum) : null;
+      if (mAlbum && !album) mAlbum = null;
+      if (album) {
+        grid.classList.add("is-hidden"); list.classList.remove("is-hidden"); detail.classList.remove("is-hidden");
+        const n = album.tracks.length;
+        detail.innerHTML = `<button class="btn btn-ghost" id="adBack" style="margin-bottom:18px"><i class="bi bi-arrow-left"></i> Back</button>
+          <div class="ad-head">${coverEl(album.cover, "cv cv-lg")}<div><div class="ad-type">${album.single ? "Single" : "Album"}</div><div class="ad-title">${esc(album.name)}</div><div class="ad-sub">${esc(album.artist)} · ${n} song${n === 1 ? "" : "s"}</div><div class="ad-actions"><button class="btn btn-primary" id="adPlay"><i class="bi bi-play-fill"></i> Play</button><button class="btn btn-ghost add-pl" data-album="${esc(album.key)}"><i class="bi bi-plus-lg"></i> Playlist</button></div></div></div>`;
+        $("adBack").onclick = () => { mAlbum = null; renderMusic(); };
+        $("adPlay").onclick = () => playList(album.tracks, 0);
+        list.innerHTML = album.tracks.map((t, i) => trackRow(t, i, "num")).join("");
+        list.onclick = e => { const r = e.target.closest(".track"); if (r) playList(album.tracks, +r.dataset.i); };
+        return;
+      }
+      detail.classList.add("is-hidden");
+
+      const matchT = t => !q || [t.title, t.artist, t.album].some(v => (v || "").toLowerCase().includes(q));
+      const albums = q ? all.filter(a => a.name.toLowerCase().includes(q) || a.artist.toLowerCase().includes(q) || a.tracks.some(matchT)) : all;
+      const songs = music.filter(matchT);
+      const showAlbums = q ? albums.length > 0 : mView === "albums";
+      const showSongs = q ? songs.length > 0 : mView === "songs";
+
+      grid.classList.toggle("is-hidden", !showAlbums);
+      list.classList.toggle("is-hidden", !showSongs && !(q && !albums.length));
+
+      if (q && !albums.length && !songs.length) {
+        list.classList.remove("is-hidden");
+        list.innerHTML = `<div class="empty-panel"><i class="bi bi-search"></i><p>No results for "${esc(mQuery.trim())}"</p><span>Try a different song, artist or album</span></div>`;
+        list.onclick = null;
+        return;
+      }
+
+      if (showAlbums) {
+        grid.innerHTML = (q ? `<div class="sec-label">Albums</div>` : "") + albums.map((a, i) => `
+          <div class="album-card" data-ai="${i}">
+            <div class="cv-wrap">${coverEl(a.cover, "cv")}<button class="ac-play ac-add add-pl" type="button" data-album="${esc(a.key)}" title="Add to playlist"><i class="bi bi-plus-lg"></i></button><button class="ac-play" type="button" title="Play"><i class="bi bi-play-fill"></i></button></div>
+            <div class="ac-title">${esc(a.name)}</div>
+            <div class="ac-sub">${esc(a.artist)} · ${a.single ? "Single" : a.tracks.length + " songs"}</div>
+          </div>`).join("");
+        grid.onclick = e => {
+          const card = e.target.closest(".album-card"); if (!card) return;
+          const a = albums[+card.dataset.ai];
+          if (e.target.closest(".ac-play")) playList(a.tracks, 0);
+          else { mAlbum = a.key; renderMusic(); window.scrollTo({ top: 0 }); }
+        };
+      }
+      if (showSongs) {
+        list.innerHTML = (q ? `<div class="sec-label">Songs</div>` : "") + songs.map((t, i) => trackRow(t, i, "cover")).join("");
+        list.onclick = e => { const r = e.target.closest(".track"); if (r) playList(songs, +r.dataset.i); };
+      }
     }
+
+    $("musicSearch").addEventListener("input", e => { mQuery = e.target.value; mAlbum = null; renderMusic(); });
+    document.querySelectorAll("[data-mv]").forEach(b => b.addEventListener("click", () => {
+      mView = b.dataset.mv; mAlbum = null; mQuery = ""; $("musicSearch").value = ""; renderMusic();
+    }));
 
     function setPlayIcon() { $("playPauseBtn").innerHTML = `<i class="bi bi-${isPlaying ? "pause" : "play"}-fill"></i>`; }
 
     function playTrack(index) {
-      if (index < 0 || index >= music.length) return;
+      if (index < 0 || index >= queue.length) return;
       currentTrack = index;
-      const t = music[index];
+      const t = queue[index];
+      currentId = t.id;
       audio.src = t.audio_url; audio.play(); isPlaying = true;
       $("playerTitle").textContent = t.title;
       $("playerArtist").textContent = t.artist || "Unknown";
+      const pc = $("playerCover");
+      if (t.cover) { pc.src = t.cover; pc.classList.remove("is-hidden"); } else pc.classList.add("is-hidden");
       $("player").classList.add("show");
       setPlayIcon();
+      loadLyrics(t);
+      markPlaying();
+      try {
+        if ("mediaSession" in navigator) navigator.mediaSession.metadata = new MediaMetadata({
+          title: t.title, artist: t.artist || "", album: t.album || "",
+          artwork: t.cover ? [{ src: t.cover, sizes: "600x600" }] : []
+        });
+      } catch (e) {}
     }
     $("playPauseBtn").addEventListener("click", () => {
       if (isPlaying) audio.pause(); else audio.play();
@@ -1171,7 +1521,7 @@
     $("prevBtn").addEventListener("click", () => playTrack(currentTrack - 1));
     $("nextBtn").addEventListener("click", () => playTrack(currentTrack + 1));
     audio.addEventListener("ended", () => {
-      if (currentTrack < music.length - 1) playTrack(currentTrack + 1);
+      if (currentTrack < queue.length - 1) playTrack(currentTrack + 1);
       else { isPlaying = false; setPlayIcon(); }
     });
 
@@ -1244,22 +1594,6 @@
       loadAll();
     });
 
-    $("saveMusic").addEventListener("click", async () => {
-      clearFlash();
-      const title = $("musicTitle").value.trim(), artist = $("musicArtist").value.trim(), file = $("musicFile").files[0];
-      if (!title || !file) return flash("Title and audio file required");
-      if (file.size > 20 * 1024 * 1024) return flash("File too big (keep under 20MB)");
-      flash("Uploading...", true);
-      const path = `${Date.now()}-${file.name.replace(/[^\w.\-]/g, "_")}`;
-      const up = await sb.storage.from("music").upload(path, file, { contentType: file.type });
-      if (up.error) return flash(up.error.message);
-      const audio_url = sb.storage.from("music").getPublicUrl(path).data.publicUrl;
-      const { error } = await sb.from("music").insert({ title, artist, audio_url });
-      if (error) return flash(error.message);
-      flash("Track saved", true);
-      $("musicTitle").value = ""; $("musicArtist").value = ""; $("musicFile").value = "";
-      loadAll();
-    });
 
     const edList = () => $("edKind").value === "games" ? games : music;
 
@@ -1267,19 +1601,26 @@
       const sel = $("edItem"), keep = sel.value;
       sel.innerHTML = `<option value="">Select...</option>` + edList().map(x => `<option value="${x.id}">${esc(x.title)}</option>`).join("");
       if (edList().some(x => String(x.id) === keep)) sel.value = keep;
+      renderBrowse();
       fillEditFields();
     }
 
     function fillEditFields() {
       const item = edList().find(x => String(x.id) === $("edItem").value);
       $("edFields").classList.toggle("is-hidden", !item);
+      $("edBrowse").classList.toggle("is-hidden", !!item || !!albEditKey);
       const isGame = $("edKind").value === "games";
       $("edGameFields").classList.toggle("is-hidden", !isGame);
       $("edArtistWrap").classList.toggle("is-hidden", isGame);
+      $("edMusicFields").classList.toggle("is-hidden", isGame);
       if (!item) return;
       $("edTitle").value = item.title;
       if (isGame) { edEd?.setValue(item.html); edIcon.set(item.icon); $("edThumb").value = ""; }
-      else $("edArtist").value = item.artist || "";
+      else {
+        $("edArtist").value = item.artist || ""; $("edLyrics").value = item.lyrics || ""; $("edLrcStatus").textContent = "";
+        $("edAlbum").value = item.album || ""; $("edTrackNo").value = item.track_no || ""; $("edCover").value = item.cover || ""; $("edCoverFile").value = ""; $("edCoverStatus").textContent = "";
+        showCoverPrev("edCoverPrev", item.cover);
+      }
     }
     $("edKind").addEventListener("change", () => { $("edItem").value = ""; refreshEditList(); clearFlash(); });
     $("edItem").addEventListener("change", () => { fillEditFields(); clearFlash(); });
@@ -1296,7 +1637,13 @@
         try { const t = await thumbFrom($("edThumb").files[0]); if (t) upd.thumb = t; } catch { return; }
         res = await sb.from("games").update(upd).eq("id", id);
       } else {
-        res = await sb.from("music").update({ title, artist: $("edArtist").value.trim() }).eq("id", id);
+        let cover = $("edCover").value.trim();
+        const cf = $("edCoverFile").files[0];
+        if (cf) { try { cover = await uploadCover(cf); } catch (e) { return flash(e.message); } }
+        res = await sb.from("music").update({
+          title, artist: $("edArtist").value.trim(), album: $("edAlbum").value.trim() || null, track_no: +$("edTrackNo").value || null,
+          cover: cover || null, lyrics: $("edLyrics").value.trim() || null
+        }).eq("id", id);
       }
       if (res.error) return flash(res.error.message);
       flash("Changes saved", true);
@@ -1314,7 +1661,20 @@
       $("edItem").value = ""; flash("Deleted", true); loadAll();
     });
 
+    function testGame(ed, title) {
+      const html = (ed ? ed.getValue() : "").trim();
+      if (!html) return flash("Write or paste some game code first");
+      clearFlash();
+      $("gameName").textContent = (title || "Test") + " (test)";
+      $("gameFrame").srcdoc = html;
+      $("gameOverlay").classList.add("show");
+      try { $("gameOverlay").requestFullscreen && $("gameOverlay").requestFullscreen(); } catch (e) {}
+    }
+    $("testGame").addEventListener("click", () => testGame(gameEd, $("gameTitle").value.trim()));
+    $("edTest").addEventListener("click", () => testGame(edEd, $("edTitle").value.trim()));
+
     $("closeGame").addEventListener("click", () => {
+      if (document.fullscreenElement) document.exitFullscreen();
       $("gameOverlay").classList.remove("show");
       setTimeout(() => { $("gameFrame").srcdoc = ""; }, 280);
     });
@@ -1472,8 +1832,633 @@
       } catch (e) { console.warn("online", e); }
     }
 
+    /* ================= Cover art ================= */
+    const normT = s => String(s || "").toLowerCase().replace(/\(.*?\)|\[.*?\]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+
+    // Looks the song up on the iTunes Search API (free, no key) and returns { cover, album, artist }
+    async function findCover(title, artist, album) {
+      try {
+        const term = [artist, title, album].filter(Boolean).join(" ");
+        const r = await fetch("https://itunes.apple.com/search?" + new URLSearchParams({ term, media: "music", entity: "song", limit: "10" }));
+        if (!r.ok) return null;
+        const res = ((await r.json()).results || []).filter(x => x.artworkUrl100);
+        if (!res.length) return null;
+        const nt = normT(title), na = normT(artist), nal = normT(album);
+        const score = x => {
+          const tn = normT(x.trackName);
+          return (tn === nt ? 4 : nt && tn.includes(nt) ? 2 : 0) + (na && normT(x.artistName).includes(na) ? 3 : 0) + (nal && normT(x.collectionName) === nal ? 2 : 0);
+        };
+        const ranked = res.map(x => [score(x), x]).sort((a, b) => b[0] - a[0]);
+        if (ranked[0][0] < 2) return null;
+        const best = ranked[0][1];
+        const isSingle = /\s-\sSingle$/i.test(best.collectionName || "");
+        return {
+          cover: best.artworkUrl100.replace(/\d+x\d+bb\./, "600x600bb."),
+          album: isSingle ? "" : (best.collectionName || ""),
+          artist: best.artistName, trackNo: best.trackNumber || null
+        };
+      } catch (e) { return null; }
+    }
+
+    async function uploadCover(file) {
+      if (file.size > 3 * 1024 * 1024) throw new Error("Cover too big (keep under 3MB)");
+      const path = `covers/${Date.now()}-${file.name.replace(/[^\w.\-]/g, "_")}`;
+      const up = await sb.storage.from("music").upload(path, file, { contentType: file.type });
+      if (up.error) throw new Error(up.error.message);
+      return sb.storage.from("music").getPublicUrl(path).data.publicUrl;
+    }
+
+    function showCoverPrev(id, url) {
+      const img = $(id);
+      img.onerror = () => img.classList.add("is-hidden");
+      if (url) { img.src = url; img.classList.remove("is-hidden"); }
+      else { img.removeAttribute("src"); img.classList.add("is-hidden"); }
+    }
+
+    function wireCover(c) {
+      $(c.file).addEventListener("change", () => {
+        const f = $(c.file).files[0];
+        if (!f) { showCoverPrev(c.prev, $(c.cover).value.trim()); $(c.status).textContent = $(c.cover).value ? "Using the album cover that was found." : ""; return; }
+        const img = $(c.prev); img.src = URL.createObjectURL(f); img.classList.remove("is-hidden");
+        $(c.status).textContent = $(c.cover).value ? "Using your uploaded image instead of the album cover found." : "Using your uploaded image.";
+      });
+      if (c.clear) $(c.clear).addEventListener("click", () => {
+        $(c.cover).value = ""; $(c.file).value = ""; showCoverPrev(c.prev, ""); $(c.status).textContent = "Cover removed (save to apply).";
+      });
+      $(c.find).addEventListener("click", async () => {
+        const st = $(c.status), title = $(c.title).value.trim();
+        if (!title) { st.textContent = "Enter a title first."; return; }
+        st.textContent = "Searching for cover art…";
+        const f = await findCover(title, $(c.artist).value.trim(), $(c.album).value.trim());
+        if (!f) { st.textContent = "No album cover found. You can upload your own image below."; return; }
+        $(c.cover).value = f.cover; showCoverPrev(c.prev, f.cover);
+        if (!$(c.album).value.trim() && f.album) $(c.album).value = f.album;
+        if (!$(c.artist).value.trim() && f.artist) $(c.artist).value = f.artist;
+        if (c.no && f.trackNo && !$(c.no).value) $(c.no).value = f.trackNo;
+        st.textContent = $(c.file).files[0]
+          ? "Album cover found, but your uploaded image will be used."
+          : "Album cover found. Upload your own image below to replace it.";
+        if ($(c.file).files[0]) { const img = $(c.prev); img.src = URL.createObjectURL($(c.file).files[0]); }
+      });
+      if (c.auto) $(c.artist).addEventListener("change", () => {
+        if (!$(c.cover).value.trim() && !$(c.file).files[0] && $(c.title).value.trim() && $(c.artist).value.trim()) $(c.find).click();
+      });
+    }    wireCover({ title: "edTitle", artist: "edArtist", album: "edAlbum", cover: "edCover", prev: "edCoverPrev", status: "edCoverStatus", find: "edCoverFind", file: "edCoverFile", clear: "edCoverClear", no: "edTrackNo" });
+
+    /* ================= Lyrics ================= */
+    const lrcStamp = s => { const m = Math.floor(s / 60); return `[${String(m).padStart(2, "0")}:${(s - m * 60).toFixed(2).padStart(5, "0")}]`; };
+    const fmtT = s => { const m = Math.floor(s / 60); return m + ":" + (s - m * 60).toFixed(2).padStart(5, "0"); };
+    const STAMP_RE = /\[\d+:\d+(?:\.\d+)?\]/g;
+
+    function parseLyrics(text) {
+      const out = []; let synced = false;
+      String(text || "").split(/\r?\n/).forEach(raw => {
+        if (/^\s*\[[a-z]+:.*\]\s*$/i.test(raw)) return; // [ar:..] [ti:..] metadata
+        const stamps = []; let m; const re = /\[(\d+):(\d+(?:\.\d+)?)\]/g;
+        while ((m = re.exec(raw))) stamps.push(+m[1] * 60 + +m[2]);
+        const line = raw.replace(STAMP_RE, "").trim();
+        if (stamps.length) { synced = true; stamps.forEach(t => out.push({ t, text: line })); }
+        else out.push({ t: null, text: line });
+      });
+      if (synced) return { synced: true, lines: out.filter(l => l.t !== null).sort((a, b) => a.t - b.t) };
+      while (out.length && !out[0].text) out.shift();
+      while (out.length && !out[out.length - 1].text) out.pop();
+      return { synced: false, lines: out };
+    }
+
+    let lyr = { synced: false, lines: [] }, lyrActive = -1;
+
+    function loadLyrics(t) {
+      lyr = parseLyrics(t.lyrics); lyrActive = -1;
+      $("lyrTitle").textContent = t.title;
+      $("lyrArtist").textContent = t.artist || "";
+      const has = lyr.lines.length > 0;
+      setLyricsOpen(has);
+      
+      $("lyricsBody").innerHTML = has
+        ? lyr.lines.map((l, i) => `<div class="lyr-line ${lyr.synced ? "synced" : "plain"}${l.text ? "" : " blank"}" data-i="${i}">${l.text ? esc(l.text) : (lyr.synced ? "♪" : "&nbsp;")}</div>`).join("")
+        : "";
+      $("lyricsBody").scrollTop = 0;
+    }
+
+    function setLyricsOpen(on) {
+      $("lyricsPanel").classList.toggle("show", on);
+      document.body.classList.toggle("lyr-open", on);
+    }
+    $("lyrFs").addEventListener("click", () => { const p = $("lyricsPanel"); if (document.fullscreenElement) document.exitFullscreen(); else if (p.requestFullscreen) p.requestFullscreen(); });
+    
+
+    $("lyricsBody").addEventListener("click", e => {
+      const el = e.target.closest(".lyr-line.synced"); if (!el) return;
+      audio.currentTime = lyr.lines[+el.dataset.i].t;
+      if (audio.paused) { audio.play(); isPlaying = true; setPlayIcon(); }
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (!lyr.synced || !lyr.lines.length) return;
+      const now = audio.currentTime + 0.1;
+      let idx = -1;
+      for (let i = 0; i < lyr.lines.length; i++) { if (lyr.lines[i].t <= now) idx = i; else break; }
+      if (idx === lyrActive) return;
+      lyrActive = idx;
+      const body = $("lyricsBody");
+      body.querySelectorAll(".lyr-line.active").forEach(x => x.classList.remove("active"));
+      const el = body.querySelector(`.lyr-line[data-i="${idx}"]`);
+      if (el) {
+        el.classList.add("active");
+        body.scrollTo({ top: el.offsetTop - body.clientHeight / 2 + el.clientHeight / 2, behavior: "smooth" });
+      }
+    });
+
+    /* ---- LRCLIB lookup ---- */
+    function audioDuration(src) {
+      return new Promise(res => {
+        const a = new Audio(); a.preload = "metadata";
+        const done = v => { clearTimeout(tm); res(v); };
+        const tm = setTimeout(() => res(null), 8000);
+        a.onloadedmetadata = () => done(isFinite(a.duration) ? a.duration : null);
+        a.onerror = () => done(null);
+        a.src = src;
+      });
+    }
+
+    async function lrclibFind(title, artist, duration, statusEl, box) {
+      if (!title) { statusEl.textContent = "Enter a title first."; return; }
+      statusEl.textContent = "Searching LRCLIB…";
+      try {
+        const base = "https://lrclib.net/api/";
+        let best = null;
+        if (duration && artist) {
+          const p = new URLSearchParams({ track_name: title, artist_name: artist, duration: Math.round(duration) });
+          const r = await fetch(base + "get?" + p);
+          if (r.ok) best = await r.json();
+        }
+        if (!best || !(best.syncedLyrics || best.plainLyrics)) {
+          const p = new URLSearchParams({ track_name: title });
+          if (artist) p.set("artist_name", artist);
+          const r = await fetch(base + "search?" + p);
+          const list = r.ok ? await r.json() : [];
+          const score = x => (x.syncedLyrics ? 0 : 1000) + (duration && x.duration ? Math.abs(x.duration - duration) : 0);
+          best = list.filter(x => x.syncedLyrics || x.plainLyrics).sort((a, b) => score(a) - score(b))[0] || null;
+        }
+        if (!best) { statusEl.textContent = "No match on LRCLIB. Check the title/artist spelling, or paste lyrics and use Tap to sync."; return; }
+        box.value = best.syncedLyrics || best.plainLyrics;
+        const diff = duration && best.duration ? Math.abs(best.duration - duration) : null;
+        let msg = best.syncedLyrics ? "Found synced lyrics." : "Found plain lyrics only. Use Tap to sync to time them.";
+        if (best.syncedLyrics && diff !== null) {
+          msg += diff <= 2 ? " Length matches your file." : ` LRCLIB's version is ${diff.toFixed(0)}s different from your file, so timing may drift. Use Tap to sync if so.`;
+        }
+        statusEl.textContent = msg;
+      } catch (e) {
+        statusEl.textContent = "Couldn't reach lrclib.net (it may be blocked on this network).";
+      }
+    }
+
+    $("edLrcFind").addEventListener("click", async () => {
+      const item = edList().find(x => String(x.id) === $("edItem").value); if (!item) return;
+      const dur = await audioDuration(item.audio_url);
+      lrclibFind($("edTitle").value.trim(), $("edArtist").value.trim(), dur, $("edLrcStatus"), $("edLyrics"));
+    });
+
+    /* ---- Tap-to-sync tool ---- */
+    const sync = { box: null, lines: [], stamps: [], objUrl: null };
+    const syncAudio = $("syncAudio");
+
+    function syncRender() {
+      const idx = sync.stamps.length;
+      $("syncLines").innerHTML = sync.lines.map((l, i) =>
+        `<div class="sync-line ${i < idx ? "done" : i === idx ? "next" : ""}" id="sl${i}"><span class="st">${i < idx ? fmtT(sync.stamps[i]) : "—"}</span><span>${esc(l)}</span></div>`).join("");
+      const cur = $("sl" + Math.min(idx, sync.lines.length - 1));
+      if (cur) cur.scrollIntoView({ block: "center" });
+    }
+
+    function syncOpen(box, src, statusEl, isObj) {
+      const lines = box.value.split(/\r?\n/)
+        .filter(l => !/^\s*\[[a-z]+:.*\]\s*$/i.test(l))
+        .map(l => l.replace(STAMP_RE, "").trim()).filter(Boolean);
+      if (!lines.length) { statusEl.textContent = "Paste the lyrics (one line per row) first, then tap to sync."; return; }
+      if (!src) { statusEl.textContent = "Choose the audio file first."; return; }
+      audio.pause(); isPlaying = false; setPlayIcon();
+      sync.box = box; sync.lines = lines; sync.stamps = [];
+      sync.objUrl = isObj ? src : null;
+      syncAudio.src = src;
+      $("syncTime").textContent = "0:00.00";
+      syncRender();
+      $("syncOverlay").classList.add("show");
+    }
+    function syncClose() {
+      syncAudio.pause(); syncAudio.removeAttribute("src"); syncAudio.load();
+      if (sync.objUrl) { URL.revokeObjectURL(sync.objUrl); sync.objUrl = null; }
+      $("syncOverlay").classList.remove("show");
+    }
+    function syncTap() {
+      if (sync.stamps.length >= sync.lines.length) return;
+      sync.stamps.push(syncAudio.currentTime);
+      syncRender();
+    }
+
+    $("edLrcSync").addEventListener("click", () => {
+      const item = edList().find(x => String(x.id) === $("edItem").value); if (!item) return;
+      syncOpen($("edLyrics"), item.audio_url, $("edLrcStatus"), false);
+    });
+    $("syncTap").addEventListener("click", syncTap);
+    $("syncUndo").addEventListener("click", () => { sync.stamps.pop(); syncRender(); });
+    $("syncCancel").addEventListener("click", syncClose);
+    $("syncDone").addEventListener("click", () => {
+      if (sync.stamps.length < sync.lines.length && !confirm(`Only ${sync.stamps.length} of ${sync.lines.length} lines are stamped. Save anyway? Unstamped lines will be left without timing.`)) return;
+      sync.box.value = sync.lines.map((l, i) => i < sync.stamps.length ? `${lrcStamp(sync.stamps[i])} ${l}` : l).join("\n");
+      syncClose();
+    });
+    syncAudio.addEventListener("timeupdate", () => { $("syncTime").textContent = fmtT(syncAudio.currentTime); });
+    document.addEventListener("keydown", e => {
+      if (!$("syncOverlay").classList.contains("show") || e.key !== " ") return;
+      e.preventDefault();
+      if (!e.repeat) syncTap();
+    });
+    document.addEventListener("keyup", e => {
+      if ($("syncOverlay").classList.contains("show") && e.key === " ") e.preventDefault();
+    });
+
     loadAll();
     startCounters();
+
+    /* ---- Add Music: stackable song cards ---- */
+    const songCards = $("songCards"), q$ = (el, sel) => el.querySelector(sel);
+    const MAXB = 20 * 1024 * 1024;
+
+    function renumber() { [...songCards.children].forEach((c, i) => { q$(c, ".sc-n").textContent = i + 1; }); }
+    function setFile(c, file) {
+      const dt = new DataTransfer(); dt.items.add(file); q$(c, ".sc-file").files = dt.files;
+      const base = file.name.replace(/\.[^.]+$/, "");
+      const m = base.match(/^\s*(\d+)\s*[-._)]\s*/);
+      if (!q$(c, ".sc-title").value.trim()) { q$(c, ".sc-title").value = base.replace(/^\s*\d+\s*[-._)]\s*/, "").trim(); q$(c, ".sc-title").dispatchEvent(new Event("input", { bubbles: true })); }
+      if (m && !q$(c, ".sc-trk").value.trim()) q$(c, ".sc-trk").value = +m[1];
+    }
+    function addCard(file, after) {
+      const c = document.createElement("div"); c.className = "song-card";
+      c.innerHTML = `<div class="sc-head"><b>Song <span class="sc-n"></span> <i class="sc-name"></i></b><button type="button" class="btn btn-ghost sc-rm">Remove</button></div>
+        <div class="sc-body">
+          <div class="form-group"><label>Audio file (max 20MB, pick several to add more cards)</label><input type="file" class="sc-file" accept="audio/*" multiple></div>
+          <div class="sc-row"><div class="form-group"><label>Title</label><input type="text" class="sc-title" placeholder="Track name"></div><div class="form-group sc-no"><label>Track #</label><input type="text" class="sc-trk" placeholder="1"></div></div>
+          <div class="form-group"><label>Artist</label><input type="text" class="sc-artist" placeholder="Artist"></div>
+          <div class="form-group"><label>Album</label><input type="text" class="sc-album" placeholder="Album name"></div>
+          <div class="form-group"><label>Cover art</label>
+            <div class="cover-row"><img class="cover-prev is-hidden sc-prev" alt=""><div style="flex:1;min-width:0"><input type="hidden" class="sc-cover"><div class="lyr-status sc-cst" style="margin-top:0"></div><div class="lyr-tools"><button type="button" class="btn btn-ghost sc-cfind"><i class="bi bi-search"></i> Get cover</button></div></div></div>
+            <input type="file" class="sc-cfile" accept="image/*" style="margin-top:8px">
+          </div>
+          <div class="form-group"><label>Lyrics (.lrc synced or plain text)</label>
+            <textarea class="lyr-box sc-lyr" placeholder="[00:12.50] First line"></textarea>
+            <div class="lyr-tools"><button type="button" class="btn btn-ghost sc-lfind"><i class="bi bi-search"></i> Get lyrics</button><button type="button" class="btn btn-ghost sc-lsync"><i class="bi bi-hand-index-thumb"></i> Tap to sync</button></div>
+            <div class="lyr-status sc-lst"></div>
+          </div>
+        </div>`;
+      if (after) after.after(c); else songCards.appendChild(c);
+      if (file) setFile(c, file);
+      renumber();
+      return c;
+    }
+
+    async function cardCover(c) {
+      const st = q$(c, ".sc-cst"), t = q$(c, ".sc-title").value.trim();
+      if (!t) { st.textContent = "Enter a title first."; return false; }
+      st.textContent = "Searching for cover art…";
+      const f = await findCover(t, q$(c, ".sc-artist").value.trim(), q$(c, ".sc-album").value.trim());
+      if (!f) { st.textContent = "No cover found. You can upload your own image."; return false; }
+      q$(c, ".sc-cover").value = f.cover;
+      if (!q$(c, ".sc-cfile").files[0]) { const im = q$(c, ".sc-prev"); im.src = f.cover; im.classList.remove("is-hidden"); }
+      if (!q$(c, ".sc-album").value.trim() && f.album) q$(c, ".sc-album").value = f.album;
+      if (!q$(c, ".sc-artist").value.trim() && f.artist) q$(c, ".sc-artist").value = f.artist;
+      if (!q$(c, ".sc-trk").value.trim() && f.trackNo) q$(c, ".sc-trk").value = f.trackNo;
+      st.textContent = "Cover found.";
+      return true;
+    }
+    async function cardLyrics(c) {
+      const f = q$(c, ".sc-file").files[0]; let dur = null;
+      if (f) { const u = URL.createObjectURL(f); dur = await audioDuration(u); URL.revokeObjectURL(u); }
+      await lrclibFind(q$(c, ".sc-title").value.trim(), q$(c, ".sc-artist").value.trim(), dur, q$(c, ".sc-lst"), q$(c, ".sc-lyr"));
+    }
+    async function runAll(fn, label) {
+      const cs = [...songCards.children].filter(c => q$(c, ".sc-title").value.trim());
+      if (!cs.length) { $("bulkStatus").textContent = "Add a title to at least one song first."; return; }
+      for (const [i, c] of cs.entries()) { $("bulkStatus").textContent = `${label} ${i + 1} of ${cs.length}…`; await fn(c); }
+      $("bulkStatus").textContent = `${label} done for ${cs.length} song${cs.length === 1 ? "" : "s"}.`;
+    }
+
+    $("addSongBtn").addEventListener("click", () => { const c = addCard(); c.scrollIntoView({ block: "nearest", behavior: "smooth" }); });
+    $("allCovers").addEventListener("click", () => runAll(cardCover, "Cover"));
+    $("allLyrics").addEventListener("click", () => runAll(cardLyrics, "Lyrics"));
+
+    songCards.addEventListener("click", e => {
+      const c = e.target.closest(".song-card"); if (!c) return;
+      if (e.target.closest(".sc-rm")) { c.remove(); if (!songCards.children.length) addCard(); renumber(); return; }
+      if (e.target.closest(".sc-cfind")) return void cardCover(c);
+      if (e.target.closest(".sc-lfind")) return void cardLyrics(c);
+      if (e.target.closest(".sc-lsync")) {
+        const f = q$(c, ".sc-file").files[0];
+        return syncOpen(q$(c, ".sc-lyr"), f ? URL.createObjectURL(f) : null, q$(c, ".sc-lst"), true);
+      }
+      if (e.target.closest(".sc-head")) c.classList.toggle("collapsed");
+    });
+    async function autoFill(c) {
+      const t = q$(c, ".sc-title").value.trim(); if (!t || !c.isConnected) return;
+      const key = t + "|" + q$(c, ".sc-artist").value.trim();
+      if (c.dataset.auto === key) return; c.dataset.auto = key;
+      if (!q$(c, ".sc-cover").value && !q$(c, ".sc-cfile").files[0]) await cardCover(c);
+      if (!q$(c, ".sc-lyr").value.trim()) await cardLyrics(c);
+    }
+    songCards.addEventListener("input", e => {
+      const c = e.target.closest(".song-card");
+      if (e.target.classList.contains("sc-title")) q$(c, ".sc-name").textContent = e.target.value.trim() ? "· " + e.target.value.trim() : "";
+      if (e.target.classList.contains("sc-title") || e.target.classList.contains("sc-artist")) {
+        clearTimeout(c._t); c._t = setTimeout(() => autoFill(c), 900);
+      }
+    });
+    songCards.addEventListener("change", e => {
+      const c = e.target.closest(".song-card"); if (!c) return;
+      if (e.target.classList.contains("sc-file")) {
+        const fs = [...e.target.files]; if (!fs.length) return;
+        let ref = c; fs.slice(1).forEach(f => { ref = addCard(f, ref); });
+        setFile(c, fs[0]);
+      }
+      if (e.target.classList.contains("sc-cfile")) {
+        const f = e.target.files[0], im = q$(c, ".sc-prev");
+        if (f) { im.src = URL.createObjectURL(f); im.classList.remove("is-hidden"); q$(c, ".sc-cst").textContent = "Using your uploaded image."; }
+      }
+    });
+
+    $("saveMusic").addEventListener("click", async () => {
+      clearFlash();
+      const cs = [...songCards.children];
+      for (const [i, c] of cs.entries()) {
+        const f = q$(c, ".sc-file").files[0];
+        if (!f || !q$(c, ".sc-title").value.trim()) return flash(`Song ${i + 1} needs an audio file and a title`);
+        if (f.size > MAXB) return flash(`Song ${i + 1} is over 20MB`);
+      }
+      let ok = 0;
+      const fail = m => { if (ok) loadAll(); return flash(m); };
+      for (const [i, c] of cs.entries()) {
+        flash(`Uploading ${i + 1} of ${cs.length}...`, true);
+        const file = q$(c, ".sc-file").files[0], t = q$(c, ".sc-title").value.trim();
+        let art = q$(c, ".sc-artist").value.trim(), album = q$(c, ".sc-album").value.trim();
+        let cover = q$(c, ".sc-cover").value.trim(), no = +q$(c, ".sc-trk").value || null;
+        const cf = q$(c, ".sc-cfile").files[0];
+        if (cf) { try { cover = await uploadCover(cf); } catch (e) { return fail(`Song ${i + 1}: ${e.message}`); } }
+        if (!cover || !no || !album) {
+          const f = await findCover(t, art, album);
+          if (f) { cover = cover || f.cover; album = album || f.album; art = art || f.artist; no = no || f.trackNo; }
+        }
+        const path = `${Date.now()}-${i}-${file.name.replace(/[^\w.\-]/g, "_")}`;
+        const up = await sb.storage.from("music").upload(path, file, { contentType: file.type });
+        if (up.error) return fail(up.error.message);
+        const audio_url = sb.storage.from("music").getPublicUrl(path).data.publicUrl;
+        const { error } = await sb.from("music").insert({ title: t, artist: art, album: album || null, cover: cover || null, track_no: no, audio_url, lyrics: q$(c, ".sc-lyr").value.trim() || null });
+        if (error) return fail(error.message);
+        c.remove(); ok++;
+      }
+      if (!songCards.children.length) addCard();
+      renumber(); $("bulkStatus").textContent = "";
+      flash(`Saved ${ok} track${ok === 1 ? "" : "s"}`, true);
+      loadAll();
+    });
+    addCard();
+
+    /* ---- Playlist: add songs / albums with search ---- */
+    let plAddMode = "albums", plAddQ = "";
+    function openPlAdd() {
+      const p = playlists.find(x => x.id === plOpen); if (!p) return;
+      plAddMode = "albums"; plAddQ = ""; $("plAddQ").value = "";
+      $("plAddTitle").textContent = "Add to " + p.name;
+      drawPlAdd(); $("plAddModal").classList.add("show");
+    }
+    function drawPlAdd() {
+      const p = playlists.find(x => x.id === plOpen); if (!p) return;
+      const q = plAddQ.trim().toLowerCase(), box = $("plAddList"), keep = box.scrollTop;
+      document.querySelectorAll("[data-pam]").forEach(b => b.classList.toggle("active", !q && b.dataset.pam === plAddMode));
+      const m = (...v) => !q || v.some(x => (x || "").toLowerCase().includes(q));
+      const albums = albumsOf(music).filter(a => m(a.name, a.artist) || a.tracks.some(t => m(t.title)));
+      const songs = music.filter(t => m(t.title, t.artist, t.album));
+      const has = (type, k) => p.items.some(i => i.type === type && (i.id || i.key) === k);
+      const row = (type, k, cover, name, sub) => `<div class="pa-row">${coverEl(cover, "cv cv-sm")}<div class="track-info"><div class="track-title">${esc(name)}</div><div class="track-artist">${esc(sub)}</div></div><button type="button" class="play-btn pa-btn${has(type, k) ? " on" : ""}" data-type="${type}" data-k="${esc(k)}"><i class="bi bi-${has(type, k) ? "check-lg" : "plus-lg"}"></i></button></div>`;
+      const showA = q ? albums.length : plAddMode === "albums", showS = q ? songs.length : plAddMode === "songs";
+      let h = "";
+      if (showA) h += (q ? `<div class="sec-label">Albums</div>` : "") + albums.map(a => row("album", a.key, a.cover, a.name, a.artist + " · " + (a.single ? "Single" : a.tracks.length + " songs"))).join("");
+      if (showS) h += (q ? `<div class="sec-label">Songs</div>` : "") + songs.map(t => row("song", String(t.id), t.cover, t.title, (t.artist || "Unknown") + (t.album ? " · " + t.album : ""))).join("");
+      box.innerHTML = h || `<div class="lyr-status">Nothing found.</div>`;
+      box.scrollTop = keep;
+    }
+    $("plAddQ").addEventListener("input", e => { plAddQ = e.target.value; drawPlAdd(); });
+    document.querySelectorAll("[data-pam]").forEach(b => b.addEventListener("click", () => { plAddMode = b.dataset.pam; plAddQ = ""; $("plAddQ").value = ""; drawPlAdd(); }));
+    $("plAddList").addEventListener("click", e => {
+      const b = e.target.closest(".pa-btn"); if (!b) return;
+      const p = playlists.find(x => x.id === plOpen); if (!p) return;
+      const it = b.dataset.type === "album" ? { type: "album", key: b.dataset.k } : { type: "song", id: b.dataset.k };
+      const i = p.items.findIndex(x => x.type === it.type && (x.id || x.key) === (it.id || it.key));
+      if (i > -1) p.items.splice(i, 1); else p.items.push(it);
+      savePL(); drawPlAdd();
+    });
+    const closePlAdd = () => { $("plAddModal").classList.remove("show"); renderMusic(); };
+    $("plAddDone").addEventListener("click", closePlAdd);
+    $("plAddModal").addEventListener("click", e => { if (e.target === $("plAddModal")) closePlAdd(); });
+
+    /* ---- Edit tab: visual library ---- */
+    var edSel = new Set(), edView = "albums", edAlbumKey = null, edQv = "", edLastKind = "";
+    const edId = x => String(x.id);
+    function edRow(t) {
+      const on = edSel.has(edId(t));
+      return `<div class="ed-row${on ? " sel" : ""}"><input type="checkbox" data-sel="${edId(t)}"${on ? " checked" : ""}>${coverEl(t.cover, "cv cv-sm")}<div class="track-info"><div class="track-title">${esc(t.title)}</div><div class="track-artist">${esc(t.artist || "Unknown")}${t.album ? " · " + esc(t.album) : ""}</div></div><button type="button" class="btn btn-ghost" data-edit="${edId(t)}"><i class="bi bi-pencil"></i> Edit</button></div>`;
+    }
+    function renderBrowse() {
+      const kind = $("edKind").value, body = $("edBrowseBody"), q = edQv.trim().toLowerCase(), isM = kind === "music";
+      if (kind !== edLastKind) { edSel = new Set(); edAlbumKey = null; albEditKey = null; edQv = ""; $("edQ").value = ""; edLastKind = kind; }
+      const ids = new Set(edList().map(edId));
+      edSel = new Set([...edSel].filter(i => ids.has(i)));
+      $("edViewSeg").classList.toggle("is-hidden", !isM || !!edAlbumKey || !!q);
+      document.querySelectorAll("[data-ev]").forEach(b => b.classList.toggle("active", b.dataset.ev === edView));
+      const empty = t => `<div class="empty-panel" style="padding:36px 20px;margin-top:12px"><i class="bi bi-${isM ? "music-note-beamed" : "controller"}"></i><p>${t}</p></div>`;
+      let h = "";
+      if (!isM) {
+        const list = games.filter(g => !q || g.title.toLowerCase().includes(q));
+        h = list.length ? `<div class="ed-grid">${list.map(g => {
+          const on = edSel.has(edId(g));
+          return `<div class="ed-tile${on ? " sel" : ""}"><label class="ed-chk"><input type="checkbox" data-sel="${edId(g)}"${on ? " checked" : ""}></label>${g.thumb ? `<img class="cv" src="${esc(g.thumb)}" alt="">` : `<div class="cv ph"><i class="bi bi-${esc(g.icon || "controller")}"></i></div>`}<div class="ac-title">${esc(g.title)}</div><button type="button" class="btn btn-ghost" data-edit="${edId(g)}"><i class="bi bi-pencil"></i> Edit</button></div>`;
+        }).join("")}</div>` : empty("No games found");
+      } else if (edAlbumKey && !q) {
+        const a = albumsOf(music).find(x => x.key === edAlbumKey);
+        if (!a) { edAlbumKey = null; return renderBrowse(); }
+        const all = a.tracks.every(t => edSel.has(edId(t)));
+        h = `<div style="display:flex;gap:8px;margin-top:12px"><button type="button" class="btn btn-ghost" data-back><i class="bi bi-arrow-left"></i> All albums</button><button type="button" class="btn btn-ghost" data-alb-edit="${esc(a.key)}"><i class="bi bi-pencil"></i> Edit album</button></div>
+          <div class="ed-ttl">${esc(a.name)}<small>${esc(a.artist)}</small></div>
+          <label class="ed-all"><input type="checkbox" data-album="${esc(a.key)}"${all ? " checked" : ""}> Select all songs</label>
+          <div class="ed-rows">${a.tracks.map(edRow).join("")}</div>`;
+      } else if (isM && (q || edView === "songs")) {
+        const list = music.filter(t => !q || [t.title, t.artist, t.album].some(v => (v || "").toLowerCase().includes(q)));
+        h = list.length ? `<div class="ed-rows">${list.map(edRow).join("")}</div>` : empty("No songs found");
+      } else {
+        const as = albumsOf(music);
+        h = as.length ? `<div class="ed-grid">${as.map(a => {
+          const on = a.tracks.every(t => edSel.has(edId(t)));
+          return `<div class="ed-tile${on ? " sel" : ""}"><label class="ed-chk"><input type="checkbox" data-album="${esc(a.key)}"${on ? " checked" : ""}></label>${coverEl(a.cover, "cv")}<div class="ac-title">${esc(a.name)}</div><div class="ac-sub">${esc(a.artist)} · ${a.single ? "Single" : a.tracks.length + " songs"}</div><div class="ed-btns"><button type="button" class="btn btn-ghost" data-open="${esc(a.key)}"><i class="bi bi-folder2-open"></i> Open</button><button type="button" class="btn btn-ghost" data-alb-edit="${esc(a.key)}"><i class="bi bi-pencil"></i> Edit</button></div></div>`;
+        }).join("")}</div>` : empty("No music yet");
+      }
+      const n = edSel.size, hasAlb = isM && music.some(t => edSel.has(edId(t)) && t.album);
+      $("edBulk").innerHTML = n ? `<div class="ed-bulk"><span>${n} selected</span>${hasAlb ? `<button type="button" class="btn btn-ghost" id="edRmAlb">Remove from album</button>` : ""}<button type="button" class="btn btn-ghost" id="edDelSel" style="color:var(--danger)"><i class="bi bi-trash"></i> Delete</button><button type="button" class="btn btn-ghost" id="edClr">Clear</button></div>` : "";
+      body.innerHTML = h;
+      $("albEdit").classList.toggle("is-hidden", !albEditKey);
+      if (albEditKey) $("edBrowse").classList.add("is-hidden");
+    }
+
+    $("edQ").addEventListener("input", e => { edQv = e.target.value; edAlbumKey = null; renderBrowse(); });
+    document.querySelectorAll("[data-ev]").forEach(b => b.addEventListener("click", () => { edView = b.dataset.ev; renderBrowse(); }));
+    $("edBack").addEventListener("click", () => { $("edItem").value = ""; fillEditFields(); renderBrowse(); clearFlash(); });
+
+    $("edBrowse").addEventListener("change", e => {
+      const t = e.target;
+      if (t.dataset.sel !== undefined) { t.checked ? edSel.add(t.dataset.sel) : edSel.delete(t.dataset.sel); renderBrowse(); }
+      else if (t.dataset.album !== undefined) {
+        const a = albumsOf(music).find(x => x.key === t.dataset.album); if (!a) return;
+        a.tracks.forEach(x => t.checked ? edSel.add(edId(x)) : edSel.delete(edId(x)));
+        renderBrowse();
+      }
+    });
+    $("edBrowse").addEventListener("click", async e => {
+      const t = e.target;
+      const be = t.closest("[data-edit]");
+      if (be) { $("edItem").value = be.dataset.edit; fillEditFields(); clearFlash(); const box = $("adminView").closest(".admin-box"); if (box) box.scrollTop = 0; return; }
+      const ba = t.closest("[data-alb-edit]"); if (ba) { openAlbEdit(ba.dataset.albEdit); return; }
+      const bo = t.closest("[data-open]"); if (bo) { edAlbumKey = bo.dataset.open; renderBrowse(); return; }
+      if (t.closest("[data-back]")) { edAlbumKey = null; renderBrowse(); return; }
+      if (t.closest("#edClr")) { edSel.clear(); renderBrowse(); return; }
+      const kind = $("edKind").value, items = edList().filter(x => edSel.has(edId(x)));
+      if (t.closest("#edRmAlb")) {
+        const withAlb = items.filter(x => x.album); if (!withAlb.length) return;
+        if (!confirm(`Remove ${withAlb.length} song${withAlb.length === 1 ? "" : "s"} from their album? The songs stay on the site as singles.`)) return;
+        const { error } = await sb.from("music").update({ album: null, track_no: null }).in("id", withAlb.map(x => x.id));
+        if (error) return flash(error.message);
+        edSel.clear(); flash("Removed from album", true); loadAll(); return;
+      }
+      if (t.closest("#edDelSel")) {
+        if (!items.length || !confirm(`Delete ${items.length} ${kind === "games" ? "game" : "song"}${items.length === 1 ? "" : "s"} permanently?`)) return;
+        if (kind === "music") {
+          const paths = items.filter(x => x.audio_url && x.audio_url.includes("/music/")).map(x => decodeURIComponent(x.audio_url.split("/music/").pop()));
+          if (paths.length) await sb.storage.from("music").remove(paths);
+        }
+        const { error } = await sb.from(kind).delete().in("id", items.map(x => x.id));
+        if (error) return flash(error.message);
+        edSel.clear(); flash("Deleted", true); loadAll();
+      }
+    });
+
+    /* ---- Edit album ---- */
+    var albEditKey = null, albEditIds = [];
+    function openAlbEdit(key) {
+      const a = albumsOf(music).find(x => x.key === key); if (!a) return;
+      albEditKey = key; albEditIds = a.tracks.map(t => t.id);
+      $("albName").value = a.single ? "" : a.name;
+      $("albArtist").value = a.artist === "Unknown" ? "" : a.artist;
+      $("albCover").value = a.cover || ""; $("albCoverFile").value = ""; $("albCoverStatus").textContent = "";
+      $("albTitleHid").value = a.tracks[0].title;
+      showCoverPrev("albCoverPrev", a.cover);
+      clearFlash(); renderBrowse();
+      const box = $("adminView").closest(".admin-box"); if (box) box.scrollTop = 0;
+    }
+    function closeAlbEdit() { albEditKey = null; renderBrowse(); fillEditFields(); clearFlash(); }
+    wireCover({ title: "albTitleHid", artist: "albArtist", album: "albName", cover: "albCover", prev: "albCoverPrev", status: "albCoverStatus", find: "albCoverFind", file: "albCoverFile", clear: "albCoverClear" });
+    $("albBack").addEventListener("click", closeAlbEdit);
+    $("albCancel").addEventListener("click", closeAlbEdit);
+    $("albSave").addEventListener("click", async () => {
+      clearFlash(); if (!albEditKey) return;
+      let cover = $("albCover").value.trim();
+      const cf = $("albCoverFile").files[0];
+      if (cf) { try { cover = await uploadCover(cf); } catch (e) { return flash(e.message); } }
+      const { error } = await sb.from("music").update({ album: $("albName").value.trim() || null, artist: $("albArtist").value.trim(), cover: cover || null }).in("id", albEditIds);
+      if (error) return flash(error.message);
+      albEditKey = null; flash("Album saved", true); loadAll();
+    });
+
+    /* ---- Volume ---- */
+    function volUI() {
+      const v = audio.muted ? 0 : audio.volume;
+      $("vol").value = v;
+      $("volBtn").innerHTML = `<i class="bi bi-volume-${v === 0 ? "mute" : v < 0.5 ? "down" : "up"}-fill"></i>`;
+    }
+    try { const sv = localStorage.getItem("ef_vol"); if (sv !== null) audio.volume = +sv; } catch (_) {}
+    $("vol").addEventListener("input", e => {
+      audio.muted = false; audio.volume = +e.target.value;
+      try { localStorage.setItem("ef_vol", e.target.value); } catch (_) {}
+      volUI();
+    });
+    $("volBtn").addEventListener("click", () => { audio.muted = !audio.muted; volUI(); });
+    volUI();
+
+    /* ---- Playlists (saved in this browser) ---- */
+    let playlists = [], plOpen = null, plTarget = null;
+    try { playlists = JSON.parse(localStorage.getItem("ef_playlists") || "[]"); } catch (_) {}
+    const savePL = () => { try { localStorage.setItem("ef_playlists", JSON.stringify(playlists)); } catch (_) {} };
+    const plTracks = p => p.items.flatMap(it => it.type === "song"
+      ? music.filter(t => String(t.id) === it.id)
+      : ((albumsOf(music).find(a => a.key === it.key) || {}).tracks || []));
+    function itemName(it) {
+      if (it.type === "song") { const t = music.find(x => String(x.id) === it.id); return t ? t.title : "(removed)"; }
+      const a = albumsOf(music).find(x => x.key === it.key); return a ? a.name + " (album)" : "(removed)";
+    }
+
+    document.addEventListener("click", e => {
+      const b = e.target.closest(".add-pl"); if (!b) return;
+      e.stopPropagation();
+      plTarget = b.dataset.album ? { type: "album", key: b.dataset.album } : { type: "song", id: String(b.dataset.id) };
+      $("plPick").innerHTML = playlists.map(p => `<button type="button" class="btn btn-ghost pl-opt" data-id="${p.id}"><span>${esc(p.name)}</span><small>${p.items.length}</small></button>`).join("")
+        || `<div class="lyr-status">No playlists yet. Create one below.</div>`;
+      $("plModal").classList.add("show");
+    }, true);
+
+    function addToPL(p) {
+      if (p && !p.items.some(i => i.type === plTarget.type && (i.id || i.key) === (plTarget.id || plTarget.key))) p.items.push(plTarget);
+      savePL(); $("plModal").classList.remove("show");
+      if (mView === "playlists") renderMusic();
+    }
+    $("plPick").addEventListener("click", e => { const b = e.target.closest(".pl-opt"); if (b) addToPL(playlists.find(p => p.id === b.dataset.id)); });
+    $("plCreate").addEventListener("click", () => {
+      const n = $("plNew").value.trim(); if (!n) return;
+      const p = { id: Date.now().toString(36), name: n, items: [] };
+      playlists.push(p); $("plNew").value = ""; addToPL(p);
+    });
+    $("plClose").addEventListener("click", () => $("plModal").classList.remove("show"));
+    $("plModal").addEventListener("click", e => { if (e.target === $("plModal")) $("plModal").classList.remove("show"); });
+
+    function renderPL() {
+      const pv = $("plView"), p = playlists.find(x => x.id === plOpen);
+      if (!p) {
+        plOpen = null;
+        pv.innerHTML = `<div class="ad-actions" style="margin:0 0 18px"><button class="btn btn-primary" id="plNewBtn"><i class="bi bi-plus-lg"></i> New playlist</button></div>` +
+          (playlists.length
+            ? `<div class="album-grid">${playlists.map(x => `<div class="album-card" data-p="${x.id}"><div class="cv ph"><i class="bi bi-music-note-list"></i></div><div class="ac-title">${esc(x.name)}</div><div class="ac-sub">${plTracks(x).length} songs</div></div>`).join("")}</div>`
+            : `<div class="empty-panel"><i class="bi bi-music-note-list"></i><p>No playlists yet</p><span>Use the + button on any song or album</span></div>`);
+        pv.onclick = e => {
+          if (e.target.closest("#plNewBtn")) {
+            const n = (prompt("Playlist name") || "").trim();
+            if (n) { playlists.push({ id: Date.now().toString(36), name: n, items: [] }); savePL(); renderPL(); }
+            return;
+          }
+          const c = e.target.closest("[data-p]"); if (c) { plOpen = c.dataset.p; renderPL(); }
+        };
+        return;
+      }
+      const ts = plTracks(p);
+      pv.innerHTML = `<button class="btn btn-ghost" id="plBack" style="margin-bottom:18px"><i class="bi bi-arrow-left"></i> Back</button>
+        <div class="ad-title">${esc(p.name)}</div><div class="ad-sub">${ts.length} song${ts.length === 1 ? "" : "s"}</div>
+        <div class="ad-actions"><button class="btn btn-primary" id="plPlay"><i class="bi bi-play-fill"></i> Play</button><button class="btn btn-ghost" id="plAdd"><i class="bi bi-plus-lg"></i> Add songs</button><button class="btn btn-ghost" id="plDel" style="color:var(--danger)">Delete</button></div>
+        <div class="chips">${p.items.map((it, i) => `<span class="chip">${esc(itemName(it))}<button type="button" data-r="${i}" title="Remove"><i class="bi bi-x"></i></button></span>`).join("")}</div>
+        <div class="music-list">${ts.map((t, i) => trackRow(t, i, "cover")).join("")}</div>`;
+      pv.onclick = e => {
+        if (e.target.closest("#plBack")) { plOpen = null; return renderPL(); }
+        if (e.target.closest("#plPlay")) return playList(ts, 0);
+        if (e.target.closest("#plAdd")) return openPlAdd();
+        if (e.target.closest("#plDel")) { if (confirm("Delete this playlist?")) { playlists = playlists.filter(x => x !== p); savePL(); plOpen = null; renderPL(); } return; }
+        const r = e.target.closest("[data-r]"); if (r) { p.items.splice(+r.dataset.r, 1); savePL(); return renderPL(); }
+        const row = e.target.closest(".track"); if (row) playList(ts, +row.dataset.i);
+      };
+      markPlaying();
+    }
   </script>
 </body>
 </html>
